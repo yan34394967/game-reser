@@ -17,6 +17,15 @@ use plugin\admin\app\controller\DictController;
 use Webman\Route;
 use support\Request;
 
+Route::any('/app/admin', function () {
+    return not_found();
+});
+Route::any('/app/admin/', function () {
+    return not_found();
+});
+// 首页
+Route::any('/', [plugin\admin\app\controller\IndexController::class, 'index']);
+
 Route::any('/app/admin/account/captcha/{type}', [AccountController::class, 'captcha']);
 
 Route::any('/app/admin/dict/get/{name}', [DictController::class, 'get']);
