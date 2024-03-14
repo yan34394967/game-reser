@@ -48,7 +48,7 @@ class GameReservationController extends Crud
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $query = $this->doSelect($where, $field, $order);
         $query = $query->with(['user' => function($q){
-            $q->select('nickname','id');
+            $q->select('nickname','avatar','id');
         }]);
         return $this->doFormat($query, $format, $limit);
     }

@@ -109,11 +109,13 @@
 					// 	align: "center"
 					// },
                     {
-						title: "预约id",align: "center",
-						field: "id",
-						sort: true,
-					},{
-						title: "用户id",align: "center",
+                        title: "用户头像",align: "center",
+                        field: "avatar",
+                        templet: function (d) {
+                            return '<img src="'+encodeURI(d['user']['avatar'])+'" style="max-width:32px;max-height:32px;" alt="" />'
+                        }
+                    },{
+						title: "用户昵称",align: "center",
 						field: "user_id",
                         templet: function (d) {
                             let field = 'user_id'

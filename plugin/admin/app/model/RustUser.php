@@ -29,5 +29,18 @@ class RustUser extends Base
      */
     public $timestamps = false;
 
-
+    public function getAvatarAttribute($value)
+    {
+        $uploadUrl = config('env.url.upload_url');
+        if (empty($value)) {
+            $value = $uploadUrl . config('env.url.avatar_url');
+        } else {
+            if (substr($value, 0, 4) == 'http' || substr($value, 0, 5) == 'https') {
+                return $value;
+            } else {
+                $value = $uploadUrl . $value;
+            }
+        }
+        return $value;
+    }
 }
