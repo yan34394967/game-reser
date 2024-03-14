@@ -125,6 +125,26 @@
                             return util.escape(items.join(","));
                         }
 					},{
+                        title: "email",align: "center",
+                        field: "last_login_ip",
+                        templet: function (d) {
+                            let field = 'email'
+                            if (typeof d[field] == "undefined") return "";
+                            let items = []
+                            items.push(d.user.email);
+                            return util.escape(items.join(","));
+                        }
+                    },{
+                        title: "用户IP",align: "center",
+                        field: "last_login_ip",
+                        templet: function (d) {
+                            let field = 'last_login_ip'
+                            if (typeof d[field] == "undefined") return "";
+                            let items = []
+                            items.push(d.user.last_login_ip);
+                            return util.escape(items.join(","));
+                        }
+                    },{
 						title: "创建时间",align: "center",
 						field: "create_time",
 						hide: true,
