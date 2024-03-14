@@ -125,13 +125,14 @@
                             return util.escape(items.join(","));
                         }
 					},{
-                        title: "email",align: "center",
-                        field: "last_login_ip",
+                        title: "邮箱",align: "center",
+                        field: "email",
                         templet: function (d) {
+                            console.log(d)
                             let field = 'email'
-                            if (typeof d[field] == "undefined") return "";
+                            if (typeof d['user'][field] == "undefined") return "";
                             let items = []
-                            items.push(d.user.email);
+                            items.push(d['user'][field]);
                             return util.escape(items.join(","));
                         }
                     },{
@@ -139,9 +140,9 @@
                         field: "last_login_ip",
                         templet: function (d) {
                             let field = 'last_login_ip'
-                            if (typeof d[field] == "undefined") return "";
+                            if (typeof d['user'][field] == "undefined") return "";
                             let items = []
-                            items.push(d.user.last_login_ip);
+                            items.push(d['user'][field]);
                             return util.escape(items.join(","));
                         }
                     },{
