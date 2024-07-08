@@ -10,47 +10,47 @@
     <body class="pear-container">
 
         <!-- 顶部查询表单 -->
-<!--        <div class="layui-card">-->
-<!--            <div class="layui-card-body">-->
-<!--                <form class="layui-form top-search-from">-->
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form top-search-from">
 
-<!--                    <div class="layui-form-item">-->
-<!--                        <label class="layui-form-label">用户id</label>-->
-<!--                        <div class="layui-input-block">-->
-<!--                            <input type="number" name="user_id" value="" class="layui-input">-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">预约类型</label>
+                        <div class="layui-input-block">
+                            <div name="type" id="type" value="" ></div>
+                        </div>
+                    </div>
 
-<!--                    <div class="layui-form-item">-->
-<!--                        <label class="layui-form-label">游戏id</label>-->
-<!--                        <div class="layui-input-block">-->
-<!--                            <input type="number" name="game_id" value="" class="layui-input">-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">用户id</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="user_id" value="" class="layui-input">
+                        </div>
+                    </div>
 
-<!--                    <div class="layui-form-item">-->
-<!--                        <label class="layui-form-label">更新时间</label>-->
-<!--                        <div class="layui-input-block">-->
-<!--                            <input type="number" name="update_time" value="" class="layui-input">-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">游戏id</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="game_id" value="" class="layui-input">
+                        </div>
+                    </div>-->
 
-<!--                    <div class="layui-form-item layui-inline">-->
-<!--                        <label class="layui-form-label"></label>-->
-<!--                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="table-query">-->
-<!--                            <i class="layui-icon layui-icon-search"></i>查询-->
-<!--                        </button>-->
-<!--                        <button type="reset" class="pear-btn pear-btn-md" lay-submit lay-filter="table-reset">-->
-<!--                            <i class="layui-icon layui-icon-refresh"></i>重置-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                    <div class="toggle-btn">-->
-<!--                        <a class="layui-hide">展开<i class="layui-icon layui-icon-down"></i></a>-->
-<!--                        <a class="layui-hide">收起<i class="layui-icon layui-icon-up"></i></a>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label"></label>
+                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="table-query">
+                            <i class="layui-icon layui-icon-search"></i>查询
+                        </button>
+                        <button type="reset" class="pear-btn pear-btn-md" lay-submit lay-filter="table-reset">
+                            <i class="layui-icon layui-icon-refresh"></i>重置
+                        </button>
+                    </div>
+                    <div class="toggle-btn">
+                        <a class="layui-hide">展开<i class="layui-icon layui-icon-down"></i></a>
+                        <a class="layui-hide">收起<i class="layui-icon layui-icon-up"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- 数据表格 -->
         <div class="layui-card">
@@ -89,6 +89,22 @@
             const DELETE_API = "/app/admin/game-reservation/delete";
             const INSERT_URL = "/app/admin/game-reservation/insert";
             const UPDATE_URL = "/app/admin/game-reservation/update";
+
+            // 字段 状态,0=下架,1=上架 status
+            layui.use(["jquery", "xmSelect"], function() {
+                let value = layui.$("#type").attr("value");
+                let initValue = value ? value.split(",") : [];
+                layui.xmSelect.render({
+                    el: "#type",
+                    name: "type",
+                    filterable: true,
+                    initValue: initValue,
+                    data: [{"value":"1","name":"真实预约"},{"value":"0","name":"自动预约"}],
+                    model: {"icon":"hidden","label":{"type":"text"}},
+                    clickClose: true,
+                    radio: true,
+                })
+            });
 
             // 表格渲染
             layui.use(["table", "form", "common", "popup", "util"], function() {

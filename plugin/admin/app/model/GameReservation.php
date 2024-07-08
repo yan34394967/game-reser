@@ -9,6 +9,7 @@ use plugin\admin\app\model\Base;
  * @property integer $id 预约id(主键)
  * @property integer $user_id 用户id
  * @property integer $game_id 游戏id
+ * @property integer type 类型,0=自动预约,1=真实预约
  * @property integer $create_time 创建时间
  * @property integer $update_time 更新时间
  */
