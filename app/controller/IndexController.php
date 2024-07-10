@@ -10,7 +10,8 @@ class IndexController
     {
         static $readme;
         if (!$readme) {
-            $readme = file_get_contents(base_path('README.md'));
+//            $readme = file_get_contents(base_path('README.md'));
+            $readme = 'hello Tank duel';
         }
         return $readme;
     }
