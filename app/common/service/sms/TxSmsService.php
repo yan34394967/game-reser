@@ -4,6 +4,7 @@ namespace app\common\service\sms;
 
 use app\common\service\BaseService;
 use GuzzleHttpExceptionClientException;
+use support\Log;
 use TencentCloud\Common\Credential;
 use TencentCloud\Common\Exception\TencentCloudSDKException;
 use TencentCloud\Common\Profile\ClientProfile;
@@ -64,10 +65,11 @@ class TxSmsService extends BaseService
             $resp = $client->DescribeRegions($req);
 
             // 输出json格式的字符串回包
-            print_r($resp->toJsonString());
+            var_export($resp->toJsonString());
         }
         catch(TencentCloudSDKException $e) {
-            echo $e;
+            Log::error('发送失败-error:'.$e->getMessage().$e->getFile().$e->getLine());
+            return false;
         }
     }
 
