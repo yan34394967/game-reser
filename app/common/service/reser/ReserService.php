@@ -40,7 +40,8 @@ class ReserService extends BaseService
         }
         $res = GameReser::create([
             'name' => $name,
-            'type' => $type
+            'type' => $type,
+            'status' => 1
         ]);
         return $res;
     }

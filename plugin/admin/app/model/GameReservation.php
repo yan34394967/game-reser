@@ -18,14 +18,14 @@ class GameReservation extends Base
     /**
      * @var string
      */
-    protected $connection = 'plugin.admin.reser_mysql';
+//    protected $connection = 'plugin.admin.reser_mysql';
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'cc_game_reservation';
+    protected $table = 'cc_game_reser';
 
     /**
      * The primary key associated with the table.
