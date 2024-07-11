@@ -58,7 +58,7 @@ class Reser extends ApiController
         ];
         $users = User::where($where)
             ->order('create_time', 'desc')
-            ->limit(10)
+            ->limit(1000)
             ->column('email');
         if ($users) {
             $addData = [];
