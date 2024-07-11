@@ -9,8 +9,8 @@ use TencentCloud\Common\Credential;
 use TencentCloud\Common\Exception\TencentCloudSDKException;
 use TencentCloud\Common\Profile\ClientProfile;
 use TencentCloud\Common\Profile\HttpProfile;
-use TencentCloud\Cvm\V20170312\CvmClient;
-use TencentCloud\Cvm\V20170312\Models\DescribeRegionsRequest;
+use TencentCloud\Sms\V20210111\Models\SendSmsRequest;
+use TencentCloud\Sms\V20210111\SmsClient;
 
 class TxSmsService extends BaseService
 {
@@ -41,33 +41,44 @@ class TxSmsService extends BaseService
             $cred = new Credential(self::$secretId, self::$secretKey);
             // 实例化一个http选项，可选的，没有特殊需求可以跳过
             $httpProfile = new HttpProfile();
-            $httpProfile->setEndpoint("cvm.tencentcloudapi.com");
+            $httpProfile->setReqTimeout(60);
+            $httpProfile->setEndpoint("sms.tencentcloudapi.com");
 
             // 实例化一个client选项，可选的，没有特殊需求可以跳过
             $clientProfile = new ClientProfile();
+            $clientProfile->setSignMethod("TC3-HMAC-SHA256");  // 指定签名算法
             $clientProfile->setHttpProfile($httpProfile);
-            // 实例化要请求产品的client对象,clientProfile是可选的
-            $client = new CvmClient($cred, "", $clientProfile);
 
-            // 实例化一个请求对象,每个接口都会对应一个request对象
-            $req = new DescribeRegionsRequest();
+            // 第二个参数是地域信息，可以直接填写字符串ap-guangzhou，支持的地域列表参考 https://cloud.tencent.com/document/api/382/52071#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8
+            $client = new SmsClient($cred, "ap-guangzhou", $clientProfile);
 
-            $params = array(
-                "PhoneNumberSet" => array( "+86".$mobile ),
-                "TemplateID" => "2208652",
-                "SmsSdkAppid" => "1400923260",
-                "Sign" => "坦克对决",
-                "SessionContext" => "test"
-            );
-            $req->fromJsonString(json_encode($params));
+            // 实例化一个 sms 发送短信请求对象,每个接口都会对应一个request对象。
+            $req = new SendSmsRequest();
+            $req->SmsSdkAppId = "1400923260";
+            /* 短信签名内容: 使用 UTF-8 编码，必须填写已审核通过的签名 */
+            // 签名信息可前往 [国内短信](https://console.cloud.tencent.com/smsv2/csms-sign) 或 [国际/港澳台短信](https://console.cloud.tencent.com/smsv2/isms-sign) 的签名管理查看
+            $req->SignName = "坦克对决";
+            /* 模板 ID: 必须填写已审核通过的模板 ID */
+            // 模板 ID 可前往 [国内短信](https://console.cloud.tencent.com/smsv2/csms-template) 或 [国际/港澳台短信](https://console.cloud.tencent.com/smsv2/isms-template) 的正文模板管理查看
+            $req->TemplateId = "2208652";
+            /* 模板参数: 模板参数的个数需要与 TemplateId 对应模板的变量个数保持一致，若无模板参数，则设置为空*/
+            $req->TemplateParamSet = array("1234");
+            /* 下发手机号码，采用 E.164 标准，+[国家或地区码][手机号]
+             * 示例如：+8613711112222， 其中前面有一个+号 ，86为国家码，13711112222为手机号，最多不要超过200个手机号*/
+            $req->PhoneNumberSet = array("+86".$mobile);
+            /* 用户的 session 内容（无需要可忽略）: 可以携带用户侧 ID 等上下文信息，server 会原样返回 */
+            $req->SessionContext = "test";
+            /* 短信码号扩展号（无需要可忽略）: 默认未开通，如需开通请联系 [腾讯云短信小助手] */
+            $req->ExtendCode = "";
+            /* 国内短信无需填写该项；国际/港澳台短信已申请独立 SenderId 需要填写该字段，默认使用公共 SenderId，无需填写该字段。注：月度使用量达到指定量级可申请独立 SenderId 使用，详情请联系 [腾讯云短信小助手](https://cloud.tencent.com/document/product/382/3773#.E6.8A.80.E6.9C.AF.E4.BA.A4.E6.B5.81)。*/
+            $req->SenderId = "";
 
-            // 返回的resp是一个DescribeRegionsResponse的实例，与请求对象对应
-            $resp = $client->DescribeRegions($req);
+            // 通过client对象调用SendSms方法发起请求。注意请求方法名与请求对象是对应的
+            // 返回的resp是一个SendSmsResponse类的实例，与请求对象对应
+            $resp = $client->SendSms($req);
 
-            // 输出json格式的字符串回包
-            var_export($resp->toJsonString());
-        }
-        catch(TencentCloudSDKException $e) {
+            print_r($resp->toJsonString());
+        } catch(TencentCloudSDKException $e) {
             Log::error('发送失败-error:'.$e->getMessage().$e->getFile().$e->getLine());
             return false;
         }
