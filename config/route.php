@@ -24,6 +24,8 @@ Route::group('/api', function () {
     Route::add(['POST','OPTION'], '/mobile/send', [app\controller\sms\Send::class, 'sendMobile']);
     // 预约
     Route::add(['POST','OPTION'], '/game/reser', [app\controller\reser\Reser::class, 'reser']);
+    // 测试填充数据
+    Route::add(['POST','OPTION'], '/add/reser', [app\controller\reser\Reser::class, 'yuyuezhe']);
 
     /*
      * 验证用户登录

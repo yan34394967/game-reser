@@ -3,6 +3,7 @@
 namespace app\controller\reser;
 
 use app\common\controller\ApiController;
+use app\common\model\reser\User;
 use app\common\service\reser\ReserService;
 use app\validate\send\SendValidate;
 
@@ -42,5 +43,36 @@ class Reser extends ApiController
             return self::error('预约失败');
         }
         return self::success([], '预约成功');
+    }
+
+    /**
+     * 填充数据
+     * @return \support\Response
+     * @throws \Exception
+     */
+    public function yuyuezhe()
+    {
+        $where = [
+            ['status', '=', 1],
+            ['type', '=', 1],
+        ];
+        $users = User::where($where)
+            ->order('create_time', 'desc')
+            ->limit(10)
+            ->column('email');
+        if ($users) {
+            $addData = [];
+            foreach ($users as $user) {
+                if ($user) {
+                    $addData[] = [
+                        'name' => $user,
+                        'type' => 2,
+                        'status' => 0
+                    ];
+                }
+            }
+            (new \app\common\model\reser\GameReser())->saveAll($addData);
+        }
+        return self::success();
     }
 }
