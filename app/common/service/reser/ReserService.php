@@ -2,7 +2,7 @@
 
 namespace app\common\service\reser;
 
-use app\common\lib\Redis;
+use app\common\lib\RedisCache;
 use app\common\model\reser\GameReser;
 use app\common\service\BaseService;
 
@@ -26,24 +26,20 @@ class ReserService extends BaseService
             self::errorBus(trans('Invalid parameters'));
         }
         $key = config('extra.redis.sms_pre').$name;
-        $getCode = Redis::getCache($key);
+        $getCode = RedisCache::getCache($key);
         if (!$getCode) {
             self::errorBus(trans('Invalid verification code'));
         }
         if ($getCode != $code) {
             self::errorBus(trans('Verification code error'));
         }
-        if ($type == 1) {
-            $field = 'mobile';
-        } elseif ($type === 2) {
-            $field = 'email';
-        }
-        $hasReser = GameReser::getFindData([$field => $name],'id');
+
+        $hasReser = GameReser::getFindData(['name' => $name],'id');
         if ($hasReser) {
             self::errorBus(trans('Already booked'));
         }
         $res = GameReser::create([
-            $field => $name,
+            'name' => $name,
             'type' => $type
         ]);
         return $res;

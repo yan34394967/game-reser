@@ -54,13 +54,13 @@ class EmailService extends BaseService
      * @param $userId
      * @return mixed
      */
-    public static function resetPasswordMail($email, $username, $userId)
-    {
-        $code = Str::getSpread(6);
-        $html = self::$sendMail->html($username, $code);
-        $subject = '【Ruby】Reset Password Verification';
-        return self::sendMail($email, $html, $code, $userId, $subject);
-    }
+//    public static function resetPasswordMail($email, $username, $userId)
+//    {
+//        $code = Str::getSpread(6);
+//        $html = self::$sendMail->html($username, $code);
+//        $subject = '【Ruby】Reset Password Verification';
+//        return self::sendMail($email, $html, $code, $userId, $subject);
+//    }
 
     /**
      * 注册发送邮件验证码
@@ -68,15 +68,15 @@ class EmailService extends BaseService
      * @param $userId
      * @return mixed
      */
-    public static function regMail($email, $userId)
-    {
-        $code = Str::getSpread(6, false);
-        // 获取配置
-        $option = Str::getOption('emailCodeTemplate')['option_value'];
-
-        $html = self::$sendMail->getHtml($code, $option);
-        return self::sendMail($email, $html, $code, $userId, $option['title']);
-    }
+//    public static function regMail($email, $userId)
+//    {
+//        $code = Str::getSpread(6, false);
+//        // 获取配置
+//        $option = Str::getOption('emailCodeTemplate')['option_value'];
+//
+//        $html = self::$sendMail->getHtml($code, $option);
+//        return self::sendMail($email, $html, $code, $userId, $option['title']);
+//    }
 
     /**
      * 发送邮件
