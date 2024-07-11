@@ -95,7 +95,7 @@
                     name: "type",
                     filterable: true,
                     initValue: initValue,
-                    data: [{"value":"0","name":"正常"},{"value":"1","name":"手机"},{"value":"2","name":"邮箱"}],
+                    data: [{"value":"1","name":"手机"},{"value":"2","name":"邮箱"}],
                     model: {"icon":"hidden","label":{"type":"text"}},
                     clickClose: true,
                     radio: true,
@@ -173,7 +173,7 @@
 
 				// 获取表格中下拉或树形组件数据
 				let apiResults = {};
-				apiResults["type"] = ["正常","手机","邮箱"];
+				apiResults["type"] = {"1":"手机","2":"邮箱"};
                 // 编辑或删除行事件
                 table.on("tool(data-table)", function(obj) {
                     if (obj.event === "remove") {
