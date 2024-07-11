@@ -54,7 +54,8 @@ class Send extends ApiController
         ];
         $sendValidate->goCheck('sendMobile', $data);
 
-        $res = $txSmsService::sendSms($mobile, $user);
+        $code = Str::getSpread(6, false);
+        $res = $txSmsService::sendSms($mobile, $code);
         if ($res) {
             return self::success(['code' => $res], trans('Send a success'));
         }
