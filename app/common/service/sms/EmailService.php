@@ -23,13 +23,8 @@ class EmailService extends BaseService
      */
     public static function sendMail($email, $html, $code, $userId, $subject='')
     {
-        // 邮箱验证码
-        $key = config('extra.redis.sms_pre').$email;
-        $keyExpire = config('extra.redis.sms_pre_expire').$email;
-        $mailCode = RedisCache::getCache($keyExpire);
-        if (! empty($mailCode)) {
-            self::errorBus(trans("Don't send too often"));
-        }
+        // 检测发送时间
+        parent::checkSmsCode($email);
 
         // 发送验证码
         $sendMail = self::$sendMail->sendMail($email, $html, $subject);
@@ -37,10 +32,9 @@ class EmailService extends BaseService
             self::errorBus($sendMail['msg']);
         }
         if ($sendMail['code']) {
-            $expires_time = config('aliyun.mail_expires_time');
-            $res = RedisCache::setCache($key, $code, $expires_time);
-            $resExpire = RedisCache::setCache($keyExpire, $code, 60);
-            if ($res && $resExpire) {
+            // 设置缓存
+            $smsCode = parent::setSmsCode($email, $code);
+            if ($smsCode) {
 //                // 足迹日志
 //                event('Footmark', [
 //                    'user_id' => $userId,

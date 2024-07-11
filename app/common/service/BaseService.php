@@ -2,6 +2,7 @@
 
 namespace app\common\service;
 
+use app\common\lib\RedisCache;
 use app\common\lib\Timer;
 use support\exception\BusinessException;
 
@@ -56,6 +57,31 @@ class BaseService
             $res->page($page, $num);
         }
         return $res->order($order)->select();
+    }
+
+    // 检测验证码是否过期
+    public static function checkSmsCode($name)
+    {
+        // 邮箱验证码
+        $keyExpire = config('extra.redis.sms_pre_expire').$name;
+        $mailCode = RedisCache::getCache($keyExpire);
+        if (! empty($mailCode)) {
+            self::errorBus(trans("Don't send too often"));
+        }
+    }
+
+    // 设置验证码缓存
+    public static function setSmsCode($name, $code)
+    {
+        $key = config('extra.redis.sms_pre').$name;
+        $expires_time = config('extra.redis.mail_expires_time');
+        $keyExpire = config('extra.redis.sms_pre_expire').$name;
+        $res = RedisCache::setCache($key, $code, $expires_time);
+        $resExpire = RedisCache::setCache($keyExpire, $code, 60);
+        if ($res && $resExpire) {
+            return true;
+        }
+        return false;
     }
 
     /**

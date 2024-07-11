@@ -6,5 +6,5 @@ return [
     'sms_pre_expire' => 'sms_expire_',
     // 短信时间有效期
     'expires_time' => 60, // 有效期
-    'mail_expires_time' => 600, // 邮件验证码有效其
+    'mail_expires_time' => 600, // 邮件验证码有效期
 ];

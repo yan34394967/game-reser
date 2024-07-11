@@ -2,6 +2,7 @@
 
 namespace app\common\service\sms;
 
+use app\common\lib\RedisCache;
 use app\common\service\BaseService;
 use support\Log;
 use TencentCloud\Common\Credential;
@@ -40,7 +41,7 @@ class TxSmsService extends BaseService
             $cred = new Credential(self::$secretId, self::$secretKey);
             // 实例化一个http选项，可选的，没有特殊需求可以跳过
             $httpProfile = new HttpProfile();
-            $httpProfile->setReqTimeout(60);
+//            $httpProfile->setReqTimeout(60);
             $httpProfile->setEndpoint("sms.tencentcloudapi.com");
 
             // 实例化一个client选项，可选的，没有特殊需求可以跳过
@@ -54,13 +55,13 @@ class TxSmsService extends BaseService
             // 实例化一个 sms 发送短信请求对象,每个接口都会对应一个request对象。
             $req = new SendSmsRequest();
             // 应用 ID 可前往 [短信控制台](https://console.cloud.tencent.com/smsv2/app-manage) 查看
-            $req->SmsSdkAppId = "1400923260";
+            $req->SmsSdkAppId = config('env.tx_sms.SmsSdkAppId');
             /* 短信签名内容: 使用 UTF-8 编码，必须填写已审核通过的签名 */
             // 签名信息可前往 [国内短信](https://console.cloud.tencent.com/smsv2/csms-sign) 或 [国际/港澳台短信](https://console.cloud.tencent.com/smsv2/isms-sign) 的签名管理查看
-            $req->SignName = "洛阳蓝景科技有限公司";
+            $req->SignName = config('env.tx_sms.SignName');
             /* 模板 ID: 必须填写已审核通过的模板 ID */
             // 模板 ID 可前往 [国内短信](https://console.cloud.tencent.com/smsv2/csms-template) 或 [国际/港澳台短信](https://console.cloud.tencent.com/smsv2/isms-template) 的正文模板管理查看
-            $req->TemplateId = "2208652";
+            $req->TemplateId = config('env.tx_sms.TemplateId');
             /* 模板参数: 模板参数的个数需要与 TemplateId 对应模板的变量个数保持一致，若无模板参数，则设置为空*/
             $req->TemplateParamSet = [$code];
             /* 下发手机号码，采用 E.164 标准，+[国家或地区码][手机号]
@@ -76,8 +77,15 @@ class TxSmsService extends BaseService
             // 通过client对象调用SendSms方法发起请求。注意请求方法名与请求对象是对应的
             // 返回的resp是一个SendSmsResponse类的实例，与请求对象对应
             $resp = $client->SendSms($req);
+            var_export($resp);
+            $resp = $resp->toJsonString();
+            $resp = json_decode($resp, true);
+            if (isset($resp['SendStatusSet'][0]['Code']) && $resp['SendStatusSet'][0]['Code'] == 'Ok') {
+                parent::setSmsCode($mobile, $code);
+                return ['code' => $code];
+            }
 
-            print_r($resp->toJsonString());
+            return false;
         } catch(TencentCloudSDKException $e) {
             Log::error('发送失败-error:'.$e->getMessage().$e->getFile().$e->getLine());
             return false;
