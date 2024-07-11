@@ -34,15 +34,21 @@ class ReserService extends BaseService
             self::errorBus(trans('Verification code error'));
         }
 
-        $hasReser = GameReser::getFindData(['name' => $name],'id');
+        $hasReser = GameReser::getFindData(['name' => $name],'id,status,update_time');
         if ($hasReser) {
-            self::errorBus(trans('Already booked'));
+            $hasReser->status = 1;
+            $hasReser->update_time = time();
+            $res = $hasReser->save();
+        } else {
+            $res = GameReser::create([
+                'name' => $name,
+                'type' => $type,
+                'status' => 1
+            ]);
         }
-        $res = GameReser::create([
-            'name' => $name,
-            'type' => $type,
-            'status' => 1
-        ]);
-        return $res;
+        if (!$res) {
+            return false;
+        }
+        return true;
     }
 }
