@@ -19,13 +19,13 @@ use Webman\Route;
  */
 Route::group('/api', function () {
     // 邮箱发送验证码
-    Route::add(['POST','OPTION'], '/email/send', [app\controller\sms\Send::class, 'sendMail']);
+    Route::add(['POST','OPTIONS'], '/email/send', [app\controller\sms\Send::class, 'sendMail']);
     // 手机发送验证码
-    Route::add(['POST','OPTION'], '/mobile/send', [app\controller\sms\Send::class, 'sendMobile']);
+    Route::add(['POST','OPTIONS'], '/mobile/send', [app\controller\sms\Send::class, 'sendMobile']);
     // 预约
-    Route::add(['POST','OPTION'], '/game/reser', [app\controller\reser\Reser::class, 'reser']);
+    Route::add(['POST','OPTIONS'], '/game/reser', [app\controller\reser\Reser::class, 'reser']);
     // 测试填充数据
-    Route::add(['POST','OPTION'], '/add/reser', [app\controller\reser\Reser::class, 'yuyuezhe']);
+    Route::add(['POST','OPTIONS'], '/add/reser', [app\controller\reser\Reser::class, 'yuyuezhe']);
 
     /*
      * 验证用户登录
@@ -45,13 +45,6 @@ Route::group('/api', function () {
      * 验证登录并防重复提交操作
      */
     Route::group('/', function () {
-        // 创建申请店铺
-//        Route::add(['POST', 'OPTIONS'], 'apply/shop', [app\controller\good\ShopController::class, 'createShop']);
-//        // 添加商品
-//        Route::add(['POST', 'OPTIONS'], 'add/good', [app\controller\good\GoodsController::class, 'addGoods']);
-//        // 添加到购物车
-//        Route::add(['POST', 'OPTIONS'], 'add/cart', [app\controller\good\CartController::class, 'addCart']);
-
 
     })->middleware([
         App\middleware\AuthCheck::class,
