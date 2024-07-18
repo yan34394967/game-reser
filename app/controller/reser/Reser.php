@@ -46,6 +46,25 @@ class Reser extends ApiController
     }
 
     /**
+     * 预约记录
+     * @param ReserService $reserService
+     * @return \support\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function reserLog(ReserService $reserService)
+    {
+        $page = request()->post('page', 1, 'intval');
+        $limit = parent::paramNum();
+        $res = $reserService::reserLog($page, $limit);
+        if (!$res) {
+            return self::success([]);
+        }
+        return self::success($res);
+    }
+
+    /**
      * 填充数据
      * @return \support\Response
      * @throws \Exception

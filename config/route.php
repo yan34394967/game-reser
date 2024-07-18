@@ -26,6 +26,8 @@ Route::group('/api', function () {
     Route::add(['POST','OPTIONS'], '/game/reser', [app\controller\reser\Reser::class, 'reser']);
     // 测试填充数据
     Route::add(['POST','OPTIONS'], '/add/reser', [app\controller\reser\Reser::class, 'yuyuezhe']);
+    // 预约记录
+    Route::add(['POST','OPTIONS'], '/reservation/log', [app\controller\reser\Reser::class, 'reserLog']);
 
     /*
      * 验证用户登录

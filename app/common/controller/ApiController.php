@@ -51,7 +51,7 @@ class ApiController
      */
     public static function paramNum($limit=10)
     {
-        $num = request()->param('num', $limit, 'intval');
+        $num = request()->param('limit', $limit, 'intval');
         return $num > 100 ? 100 : $num;
     }
 

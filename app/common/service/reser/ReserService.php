@@ -51,4 +51,20 @@ class ReserService extends BaseService
         }
         return true;
     }
+
+    /**
+     * 预约记录
+     * @param $page
+     * @param $limit
+     * @return GameReser[]|array|\think\Collection|\think\db\Query[]|\think\model\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function reserLog($page=1, $limit=10)
+    {
+        return GameReser::field('id,name,create_time')
+            ->page($page, $limit)
+            ->select();
+    }
 }
