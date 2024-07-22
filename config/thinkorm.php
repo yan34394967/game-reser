@@ -32,6 +32,7 @@ return [
             // 自定义分页类
             'bootstrap' =>  ''
         ],
+        // chick_community数据库
         'reser_mysql' => [
             // 数据库类型
             'type' => 'mysql',

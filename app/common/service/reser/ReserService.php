@@ -4,6 +4,7 @@ namespace app\common\service\reser;
 
 use app\common\lib\RedisCache;
 use app\common\model\reser\GameReser;
+use app\common\model\reser\GameReservation;
 use app\common\service\BaseService;
 
 class ReserService extends BaseService
@@ -63,8 +64,12 @@ class ReserService extends BaseService
      */
     public static function reserLog($page=1, $limit=10)
     {
-        return GameReser::field('id,name,create_time')
+        $game_reservation_count = GameReservation::count();
+        $tank_game_reser_count = GameReser::count();
+        $res['count'] = $game_reservation_count + $tank_game_reser_count;
+        $res['lists'] = GameReser::field('id,name,create_time')
             ->page($page, $limit)
             ->select();
+        return $res;
     }
 }
