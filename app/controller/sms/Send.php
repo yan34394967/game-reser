@@ -28,10 +28,11 @@ class Send extends ApiController
         // 发送邮件业务
         $option = [
             'code' => Str::getSpread(6, false),
-            'title' => '【Reservition】你正在申请预约',
-            'content' => '你的验证码为：',
+            'title' => 'Tank Duel Reservation Verification Code',
+            'content' => 'Thank you for reserving Tank Duel. Your verification code is:',
+            'team' => 'Best regards, Tank Duel Team'
         ];
-        $res = $emailBus->sendFromMail($email, $option);
+        $res = $emailBus->reserHtml($email, $option);
         if ($res) {
             return self::success([], trans('Send a success'));
         }

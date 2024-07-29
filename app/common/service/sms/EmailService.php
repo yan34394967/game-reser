@@ -110,4 +110,12 @@ class EmailService extends BaseService
 //        Db::commit();
         return $res;
     }
+
+    public static function reserHtml($email, $option)
+    {
+        $html = self::$sendMail->reserHtml($option);
+        $res = self::sendMail($email, $html, $option['code'], 0, $option['title']);
+
+        return $res;
+    }
 }
