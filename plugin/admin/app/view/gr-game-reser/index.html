@@ -15,6 +15,13 @@
                 <form class="layui-form top-search-from">
 
                     <div class="layui-form-item">
+                        <label class="layui-form-label">预约类型</label>
+                        <div class="layui-input-block">
+                            <div name="status" id="status" value="" ></div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
                         <label class="layui-form-label">邮箱/手机</label>
                         <div class="layui-input-block">
                             <div class="layui-input-block">
@@ -85,6 +92,22 @@
             const DELETE_API = "/app/admin/gr-game-reser/delete";
             const INSERT_URL = "/app/admin/gr-game-reser/insert";
             const UPDATE_URL = "/app/admin/gr-game-reser/update";
+
+            // 字段 预约类型,0=自动预约1=真实预约 status
+            layui.use(["jquery", "xmSelect"], function() {
+                let value = layui.$("#status").attr("value");
+                let initValue = value ? value.split(",") : [];
+                layui.xmSelect.render({
+                    el: "#status",
+                    name: "status",
+                    filterable: true,
+                    initValue: initValue,
+                    data: [{"value":"0","name":"自动预约"},{"value":"1","name":"真实预约"}],
+                    model: {"icon":"hidden","label":{"type":"text"}},
+                    clickClose: true,
+                    radio: true,
+                })
+            });
 
             // 字段 类型,1=手机,2=邮箱 type
             layui.use(["jquery", "xmSelect"], function() {
