@@ -37,9 +37,15 @@ class ReserService extends BaseService
 
         $hasReser = GameReser::getFindData(['name' => $name],'id,status,update_time');
         if ($hasReser) {
-            $hasReser->status = 1;
-            $hasReser->update_time = time();
-            $res = $hasReser->save();
+            if ($hasReser['status'] == 1) {
+                $date = date('Y/m/d', $hasReser['update_time']);
+                $time = date('H:i', $hasReser['update_time']);
+                return self::errorBus("You have completed the reservation on $date at $time");
+            } else {
+                $hasReser->status = 1;
+                $hasReser->update_time = time();
+                $res = $hasReser->save();
+            }
         } else {
             $res = GameReser::create([
                 'name' => $name,
