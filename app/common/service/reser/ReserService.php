@@ -69,7 +69,15 @@ class ReserService extends BaseService
         $res['count'] = $game_reservation_count + $tank_game_reser_count;
         $res['lists'] = GameReser::field('id,name,create_time')
             ->page($page, $limit)
-            ->select();
+            ->select()->each(function ($item) {
+                $exp = explode('@', $item['name']);
+                if (count($exp) == 2) {
+                    $name = substr_replace($item['name'], '****', 2, -2).'@'. $exp[1];
+                } else {
+                    $name = substr_replace($item['name'], '****', 2, -2);
+                }
+                $item['name'] = $name;
+            });
         return $res;
     }
 }
