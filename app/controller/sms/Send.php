@@ -33,7 +33,7 @@ class Send extends ApiController
         ];
         $res = $emailBus->sendFromMail($email, $option);
         if ($res) {
-            return self::success(['code' => $res], trans('Send a success'));
+            return self::success([], trans('Send a success'));
         }
         return self::error(trans('Send failure'));
     }
@@ -57,7 +57,7 @@ class Send extends ApiController
         $code = Str::getSpread(6, false);
         $res = $txSmsService::sendSms($mobile, $code);
         if ($res) {
-            return self::success(['code' => $res], trans('Send a success'));
+            return self::success([], trans('Send a success'));
         }
         return self::error(trans('Send failure'));
     }
