@@ -43,7 +43,7 @@ class TankData extends Command
         foreach ($lists as $list) {
             $isReser = $GameReserModel::getFindData(['name' => $list['user']['email']]);
             if ($isReser) {
-                $GameReserModel::update(['update_time' => time()], ['name' => $list['user']['email']]);
+                $GameReserModel::update(['update_time' => $list['update_time']], ['name' => $list['user']['email']]);
             } else {
                 $GameReserModel::create([
                     'name' => $list['user']['email'],
