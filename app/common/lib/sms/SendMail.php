@@ -10,9 +10,9 @@ class SendMail
 {
     public function sendMail($toMail, $html, $subject = '') {
         //md5( address={address}&app={app}&nounce={nounce}&timestamp={timestamp}appSecret )
-        $app = 'rust';
-        $nounce = 'rust'. Str::getLoginToken($toMail);
-        $appSecret = '1dWDZ33YAsQMFHl';
+        $app = 'tank';
+        $nounce = 'tank'. Str::getLoginToken($toMail);
+        $appSecret = 'ASEdUzqw4R3UBQdd';
         $time = time();
         $data = [
             'app' => $app,
@@ -164,7 +164,7 @@ EOF;
             <div style="width:700px;margin:0 auto;">
                 <div style="padding:10px 10px 0;border-top:1px solid #ccc;color:#747474;margin-bottom:20px;line-height:1.3em;font-size:12px;">
 <!--                    <p>此为系统邮件，请勿回复<br>-->
-                    <p>This is a system mail, please do not reply<br>
+                    <p>This is an automated message, please do not reply.<br>
                 </div>
             </div>
         </td>
