@@ -9,5 +9,7 @@ return [
     'Invalid parameters'                        => 'Invalid parameters',
     'Already booked'                            => 'Already booked',
     'The number of items sent today has exceeded the upper limit'   => 'The number of items sent today has exceeded the upper limit',
-    'A maximum of %s messages can be sent in one hour'  => 'A maximum of %s messages can be sent in one hour'
+    'A maximum of %s messages can be sent in one hour'  => 'A maximum of %s messages can be sent in one hour',
+    'Appointment successful'                    => 'Appointment successful',
+    'Appointment failed'                        => 'Appointment failed',
 ];
