@@ -38,7 +38,6 @@ class TankData extends Command
         $lists = $GameReservationModel::with(['user' => function($user){
             $user->field('id,email');
         }])->order(['create_time' => 'asc'])
-            ->limit(10)
             ->cursor();
 
         foreach ($lists as $key=>$list) {
