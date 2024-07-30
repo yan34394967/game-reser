@@ -72,7 +72,8 @@ class ReserService extends BaseService
     {
         $game_reservation_count = GameReservation::count();
         $tank_game_reser_count = GameReser::count();
-        $res['count'] = $game_reservation_count + $tank_game_reser_count;
+//        $res['count'] = $game_reservation_count + $tank_game_reser_count;
+        $res['count'] = 44307+2410;
         $res['lists'] = GameReser::field('id,name,create_time')
             ->order(['update_time' => 'desc'])
             ->page($page, $limit)
