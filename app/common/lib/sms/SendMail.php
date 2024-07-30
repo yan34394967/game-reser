@@ -145,15 +145,16 @@ EOF;
             </div>
             <div style="width:680px;padding:0 10px;margin:0 auto;">
                 <div style="line-height:1.5;font-size:14px;margin-bottom:25px;color:#4d4d4d;">
-                    <strong style="display:block;margin-bottom:15px;">Dear users：<span style="color:#f60;font-size: 16px;"></span>Hello！</strong>
+                    <strong style="display:block;margin-bottom:15px;">Dear users,<span style="color:#f60;font-size: 16px;"></span></strong>
                     <strong style="display:block;margin-bottom:15px;">
-                        {$optionValue['content']}<span style="color:#f60;font-size: 24px">{$optionValue['code']}</span>。
+                        {$optionValue['content']}
+                        <span style="color:#f60;font-size: 24px">{$optionValue['code']}</span>。
                     </strong>
                 </div>
                 <div style="margin-bottom:30px;">
-                    <small style="display:block;margin-bottom:20px;font-size:12px;">
-                        <p style="color:#747474;">
-                            Please use this code within 10 minutes to complete your reservation.
+                    <small style="display:block;margin-bottom:20px;font-size:14px;">
+                        <p style="color:#4d4d4d;">
+                            Please use this code within 5 minutes to complete your reservation.
                             <br>Enjoy the game!
                             <br>{$optionValue['team']}
                         </p>

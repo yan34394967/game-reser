@@ -29,7 +29,7 @@ class Send extends ApiController
         $option = [
             'code' => Str::getSpread(6, false),
             'title' => 'Tank Duel Reservation Verification Code',
-            'content' => 'Thank you for reserving Tank Duel. Your verification code is:',
+            'content' => "<br>Thank you for reserving Tank Duel.</br> Your verification code is:",
             'team' => 'Best regards, Tank Duel Team'
         ];
         $res = $emailBus->reserHtml($email, $option);
