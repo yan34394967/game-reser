@@ -74,6 +74,7 @@ class ReserService extends BaseService
         $tank_game_reser_count = GameReser::count();
         $res['count'] = $game_reservation_count + $tank_game_reser_count;
         $res['lists'] = GameReser::field('id,name,create_time')
+            ->order(['update_time' => 'desc'])
             ->page($page, $limit)
             ->select()->each(function ($item) {
                 $exp = explode('@', $item['name']);
