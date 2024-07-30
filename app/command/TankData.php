@@ -41,24 +41,26 @@ class TankData extends Command
             ->cursor();
 
         foreach ($lists as $key=>$list) {
-            $isReser = $GameReserModel::getFindData(['name' => $list['user']['email']]);
-            if ($isReser) {
-                if ($list['type'] == 0) {
-                    $isReser->update_time = $list['update_time'] + $key;
+            if (!empty($list['user']['email'])) {
+                $isReser = $GameReserModel::getFindData(['name' => $list['user']['email']]);
+                if ($isReser) {
+                    if ($list['type'] == 0) {
+                        $isReser->update_time = $list['update_time'] + $key;
 //                    $GameReserModel::update(['update_time' => $list['update_time'] + $key], ['name' => $list['user']['email']]);
-                } else if($list['type'] == 1) {
-                    $isReser->update_time = $list['update_time'];
+                    } else if ($list['type'] == 1) {
+                        $isReser->update_time = $list['update_time'];
 //                    $GameReserModel::update(['update_time' => $list['update_time']], ['name' => $list['user']['email']]);
+                    }
+                    $isReser->save();
+                } else {
+                    $GameReserModel::create([
+                        'name' => $list['user']['email'],
+                        'type' => 2,
+                        'status' => $list['type'],
+                        'create_time' => $list['create_time'] + $key,
+                        'update_time' => $list['update_time'] + $key
+                    ]);
                 }
-                $isReser->save();
-            } else {
-                $GameReserModel::create([
-                    'name' => $list['user']['email'],
-                    'type' => 2,
-                    'status' => $list['type'],
-                    'create_time' => $list['create_time'] + $key,
-                    'update_time' => $list['update_time'] + $key
-                ]);
             }
         }
 
