@@ -2,15 +2,16 @@
 
 namespace app\common\model\reser;
 
+use app\common\model\BaseModel;
 use plugin\admin\app\model\Base;
 use plugin\admin\app\model\RustUser;
 
-class GameReservation extends Base
+class GameReservation extends BaseModel
 {
     /**
      * @var string
      */
-    protected $connection = 'plugin.admin.reser_mysql';
+    protected $connection = 'reser_mysql';
 
     /**
      * The table associated with the model.
