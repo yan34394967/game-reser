@@ -78,9 +78,9 @@ class ReserService extends BaseService
             ->select()->each(function ($item) {
                 $exp = explode('@', $item['name']);
                 if (count($exp) == 2) {
-                    $name = substr_replace($item['name'], '****', 2, -2).'@'. $exp[1];
+                    $name = substr_replace($exp[0], '****', 2, -2).'@'. $exp[1];
                 } else {
-                    $name = substr_replace($item['name'], '****', 2, -2);
+                    $name = substr_replace($exp[0], '****', 2, -2);
                 }
                 $item['name'] = $name;
             });
