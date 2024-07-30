@@ -23,6 +23,7 @@ class TankData extends Command
     }
 
     /**
+     * 44307+2410 = 46717
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
@@ -40,17 +41,24 @@ class TankData extends Command
             ->limit(10)
             ->cursor();
 
-        foreach ($lists as $list) {
+        foreach ($lists as $key=>$list) {
             $isReser = $GameReserModel::getFindData(['name' => $list['user']['email']]);
             if ($isReser) {
-                $GameReserModel::update(['update_time' => $list['update_time']], ['name' => $list['user']['email']]);
+                if ($list['type'] == 0) {
+                    $isReser->update_time = $list['update_time'] + $key;
+//                    $GameReserModel::update(['update_time' => $list['update_time'] + $key], ['name' => $list['user']['email']]);
+                } else if($list['type'] == 1) {
+                    $isReser->update_time = $list['update_time'];
+//                    $GameReserModel::update(['update_time' => $list['update_time']], ['name' => $list['user']['email']]);
+                }
+                $isReser->save();
             } else {
                 $GameReserModel::create([
                     'name' => $list['user']['email'],
                     'type' => 2,
                     'status' => $list['type'],
-                    'create_time' => $list['create_time'],
-                    'update_time' => $list['update_time']
+                    'create_time' => $list['create_time'] + $key,
+                    'update_time' => $list['update_time'] + $key
                 ]);
             }
         }
