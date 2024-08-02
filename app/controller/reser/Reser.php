@@ -40,9 +40,9 @@ class Reser extends ApiController
         ]);
         $res = $reserService::gameReser($name, $code, $type);
         if (!$res) {
-            return self::error('预约失败');
+            return self::error(trans('Appointment failed'));
         }
-        return self::success([], '预约成功');
+        return self::success([], trans('Appointment successful'));
     }
 
     /**

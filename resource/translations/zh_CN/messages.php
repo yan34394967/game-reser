@@ -10,4 +10,6 @@ return [
     'Already booked'                            => '已预约过了',
     'The number of items sent today has exceeded the upper limit'   => '今天发送数量已超过上限',
     'A maximum of %s messages can be sent in one hour'  => '一个小时最多发送%s条',
+    'Appointment successful'                    => '预约成功',
+    'Appointment failed'                        => '预约失败'
 ];
