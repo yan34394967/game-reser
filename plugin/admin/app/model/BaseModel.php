@@ -15,7 +15,7 @@ class BaseModel extends Base
     protected $dateFormat = 'U';
 
     protected $casts = [
-        'create_time' => 'datetime:Y-m-d',
-        'update_time' => 'datetime:Y-m-d',
+        'create_time' => 'datetime:Y-m-d H:i:s',
+        'update_time' => 'datetime:Y-m-d H:i:s',
     ];
 }
