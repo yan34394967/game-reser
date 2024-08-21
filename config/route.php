@@ -18,6 +18,8 @@ use Webman\Route;
  * api接口
  */
 Route::group('/api', function () {
+    // test
+    Route::any('/test', [app\controller\IndexController::class, 'index']);
     // 邮箱发送验证码
     Route::add(['POST','OPTIONS'], '/email/send', [app\controller\sms\Send::class, 'sendMail']);
     // 手机发送验证码
