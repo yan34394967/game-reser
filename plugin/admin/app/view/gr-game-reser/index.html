@@ -63,14 +63,14 @@
         </div>
 
         <!-- 表格顶部工具栏 -->
-        <script type="text/html" id="table-toolbar">
-            <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add" permission="app.admin.grgamereser.insert">
-                <i class="layui-icon layui-icon-add-1"></i>新增
-            </button>
-            <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove" permission="app.admin.grgamereser.delete">
-                <i class="layui-icon layui-icon-delete"></i>删除
-            </button>
-        </script>
+<!--        <script type="text/html" id="table-toolbar">-->
+<!--            <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add" permission="app.admin.grgamereser.insert">-->
+<!--                <i class="layui-icon layui-icon-add-1"></i>新增-->
+<!--            </button>-->
+<!--            <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove" permission="app.admin.grgamereser.delete">-->
+<!--                <i class="layui-icon layui-icon-delete"></i>删除-->
+<!--            </button>-->
+<!--        </script>-->
 
         <!-- 表格行工具栏 -->
         <script type="text/html" id="table-bar">
@@ -102,7 +102,7 @@
                     name: "status",
                     filterable: true,
                     initValue: initValue,
-                    data: [{"value":"0","name":"自动预约"},{"value":"1","name":"真实预约"}],
+                    data: [{"value":"0","name":"自动预约"},{"value":"1","name":"外部预约"}],
                     model: {"icon":"hidden","label":{"type":"text"}},
                     clickClose: true,
                     radio: true,
